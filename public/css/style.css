@@ -63,10 +63,14 @@ html {
 }
 
 body {
+    background-image: url('../bg.webp');
+    background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
     font-family: 'Rubik', sans-serif;
     font-size: 0.875rem;
     color: #666;
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
     overflow-x: hidden;
     height: 100%;
 }
