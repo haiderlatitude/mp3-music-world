@@ -11,7 +11,7 @@
                 <form action="{{ route('login') }}" method="post" class="form-signin">
                     @csrf
                     <div class="account-logo">
-                        <a href="{{ url('/') }}"><img src="#" alt="account-logo"></a>
+                        <a href="{{ url('login') }}"><img src="{{ asset('logo.png') }}" alt="account-logo"></a>
                     </div>
                     <x-jet-validation-errors class="alert alert-danger alert-dismissible fade show" />
                     <div class="form-group">

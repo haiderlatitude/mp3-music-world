@@ -12,7 +12,9 @@
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-
+                    <div class="account-logo">
+                        <a href="{{ url('login') }}"><img src="{{ asset('logo.png') }}" alt="account-logo"></a>
+                    </div>
                     <div class='form-group'>
                         <x-jet-label for="name" value="{{ __('Name') }}"/>
                         <x-jet-input id="name" class="form-control" type="text" name="name" :value="old('name')" required
