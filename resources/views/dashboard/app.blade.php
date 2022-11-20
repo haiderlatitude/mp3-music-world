@@ -22,6 +22,8 @@
 @include('dashboard.js')
 @section('js')
 @show
+
+@stack('scripts')
 </body>
 
 </html>

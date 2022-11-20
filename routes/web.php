@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminSongsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,12 @@ Route::middleware([
 });
 
 // Route::view('test', 'test');
+
+//Admin Routes...
+Route::prefix('admin')
+    ->middleware('role:admin')
+    ->group(function (){
+
+        Route::resource('songs', AdminSongsController::class);
+
+    });

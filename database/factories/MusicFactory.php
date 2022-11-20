@@ -17,7 +17,9 @@ class MusicFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name,
+            'artist_id' => 1,
+            'file_path' => 'abc',
         ];
     }
 }
