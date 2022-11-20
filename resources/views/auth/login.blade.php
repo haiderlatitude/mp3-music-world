@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,8 +50,7 @@
             </div>
         </div>
 </div>
-<div class="sidebar-overlay" data-reff=""></div>
-@include('dashboard.js')
+
 </body>
 </html>
 

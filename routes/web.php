@@ -27,4 +27,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::view('test', 'test');
+// Route::view('test', 'test');

@@ -1,12 +1,17 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo/>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+@include('dashboard.head', ['title' => "Forgot Password"])
+
+<body>
+    <div class="main-wrapper  account-wrapper">
+        <div class="account-page">
+            <div class="account-center">
+                <div class="account-box">
+                
+                <div class="mb-4 text-sm text-gray-600">
+                {{ __('Enter your email address so we can send you a password reset link.') }}
+                </div>
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -19,17 +24,21 @@
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
-            <div class="block">
+            <div class="form-group">
                 <x-jet-label for="email" value="{{ __('Email') }}"/>
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                <x-jet-input id="email" class="form-control" type="email" name="email" :value="old('email')"
                              required autofocus/>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Email Password Reset Link') }}
+            <div class="form-group text-center mt-3">
+                <x-jet-button class='btn btn-primary'>
+                    {{ __('Email Link') }}
                 </x-jet-button>
             </div>
         </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
