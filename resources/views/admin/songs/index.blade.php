@@ -7,7 +7,7 @@
     </div>
     @endif
 
-    <a href="{{ route('songs.create') }}">Upload Song</a>
+    <!-- <a href="{{ route('songs.create') }}">Upload a Song</a> -->
 
     {{ $dataTable->table() }}
 @endsection
