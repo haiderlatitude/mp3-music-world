@@ -34,7 +34,7 @@ Route::middleware([
 Route::prefix('admin')
     ->middleware('role:admin')
     ->group(function (){
-
         Route::resource('songs', AdminSongsController::class);
-
+        Route::post('upload', [AdminSongsController::class, 'upload']);
+        Route::get('clear_temp', [AdminSongsController::class, 'clearTemp']);
     });

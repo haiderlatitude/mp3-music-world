@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\SongsListAdminDataTable;
+use App\Models\Artist;
+use App\Models\Music;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class AdminSongsController extends Controller
 {
@@ -20,22 +24,37 @@ class AdminSongsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        $artists = Artist::all();
+        return view('admin.songs.create', compact('artists'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $music = new  Music();
+        $music->name = $request->all()['song-name'];
+        $music->artist_id = 1;
+
+        $temp = $request->all()['song'];
+        $file = explode('@', $temp);
+
+        Storage::move('songs/temp/' . $file[0] . '/' . $file[1],
+            'songs/' . $file[0] . '/' . $file[1]);
+        $music->file_path = $file[0] . '/' . $file[1];
+        $music->save();
+        Storage::deleteDirectory('songs/temp/' . $file[0]);
+
+        return redirect()->intended('admin/songs')
+            ->with('message', 'Song uploaded successfully.');
     }
 
     /**
@@ -81,5 +100,25 @@ class AdminSongsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function upload(Request $request){
+        if ($request->hasFile('song')){
+            $file = $request->file('song');
+            $fileName = $file->getClientOriginalName();
+            $folder = uniqid();
+            $file->storeAs('songs/temp/' . $folder, $fileName);
+
+            return $folder . '@' . $fileName;
+        }
+
+        return '';
+    }
+
+    public function clearTemp(){
+        Storage::deleteDirectory('songs/temp');
+        return redirect()->intended('admin/songs/create')
+            ->with('message', 'Temporary Folder Deleted');
     }
 }
