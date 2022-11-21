@@ -1,7 +1,7 @@
 <div class="header">
     <div class="header-left">
-        <a href="index-2.html" class="logo">
-            <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>MP3 Music World</span>
+        <a href="dashboard" class="logo">
+            <img src="{{asset('logo.png')}}" width="35" height="35" alt="Main Logo"> <span>MP3 Music World</span>
         </a>
     </div>
     <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
