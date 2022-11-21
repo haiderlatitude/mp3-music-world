@@ -42,7 +42,7 @@
 
         </form>
 
-        <a href="{{ url('admin/clear_temp') }}" class="btn btn-danger">Clear Temp Folder</a>
+        <a href="{{ url('admin/clear_temp') }}" class="btn btn-danger mt-2">Clear Temp Folder</a>
 
 @endsection
 

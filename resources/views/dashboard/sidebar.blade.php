@@ -10,16 +10,11 @@
                 <li>
                     <a href="{{ url('admin/songs') }}"><i class="fa fa-dashboard"></i> <span>Songs</span></a>
                 </li>
+                <li>
+                    <a href="{{ route('songs.create') }}"><i class="fa fa-dashboard"></i> <span>Upload a Song</span></a>
+                </li>
                 @endhasrole
-{{--                <li class="submenu">--}}
-{{--                    <a href="#"><i class="fa fa-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>--}}
-{{--                    <ul style="display: none;">--}}
-{{--                        <li><a href="employees.html">Employees List</a></li>--}}
-{{--                        <li><a href="leave.html">Leaves</a></li>--}}
-{{--                        <li><a href="holidays.html">Holidays</a></li>--}}
-{{--                        <li><a href="attendance.html">Attendance</a></li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+
             </ul>
         </div>
     </div>
