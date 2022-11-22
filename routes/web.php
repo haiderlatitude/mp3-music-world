@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminSongsController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::middleware([
 
 //Admin Routes...
 Route::prefix('admin')
-    ->middleware('role:admin')
+    ->middleware('role:' . \App\Utils\Roles::$ADMIN)
     ->group(function (){
         Route::resource('songs', AdminSongsController::class);
         Route::post('upload', [AdminSongsController::class, 'upload']);
