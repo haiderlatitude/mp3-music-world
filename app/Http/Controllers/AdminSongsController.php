@@ -84,11 +84,22 @@ class AdminSongsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $song = Music::query()->find($id);
+        $song->name = $request->all()['name'];
+        $song->artist_id = $request->all()['artist_id'];
+        $song->save();
+
+        return response()->json(
+            [
+                'type' => 'success',
+                'message' => 'Song updated Successfully!',
+            ]
+        );
+
     }
 
     /**
@@ -104,9 +115,14 @@ class AdminSongsController extends Controller
 
 
     public function upload(Request $request){
+//        $request->validate([
+//           'song' => 'mimetypes:audio/mpeg'
+//        ]);
         if ($request->hasFile('song')){
             $file = $request->file('song');
             $fileName = $file->getClientOriginalName();
+            $mime = File::getMimeType($file);
+//            dd($mime);
             $folder = uniqid();
             $file->storeAs('songs/temp/' . $folder, $fileName);
 
@@ -120,5 +136,10 @@ class AdminSongsController extends Controller
         Storage::deleteDirectory('songs/temp');
         return redirect()->intended('admin/songs/create')
             ->with('message', 'Temporary Folder Deleted');
+    }
+
+
+    public function getArtists(){
+        return Artist::all()->toJson();
     }
 }

@@ -38,4 +38,5 @@ Route::prefix('admin')
         Route::resource('songs', AdminSongsController::class);
         Route::post('upload', [AdminSongsController::class, 'upload']);
         Route::get('clear_temp', [AdminSongsController::class, 'clearTemp']);
+        Route::post('artists/get_artists', [AdminSongsController::class, 'getArtists']);
     });

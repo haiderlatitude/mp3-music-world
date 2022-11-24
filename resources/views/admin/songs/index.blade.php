@@ -12,6 +12,10 @@
     {{ $dataTable->table() }}
 @endsection
 
+@section('js')
+    @include('admin.songs.js')
+@endsection
+
 @push('scripts')
     {{ $dataTable->scripts() }}
 @endpush

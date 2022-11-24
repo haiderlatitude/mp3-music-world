@@ -47,33 +47,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function (){
-
-            let inputElement = $('#song');
-            let filePond = FilePond.create(inputElement[0], {
-                onaddfilestart: (file) => { isLoadingCheck(); }
-                // onaddfile: (file) => { isLoadingCheck(); },
-                // onprocessfile: (files) => { isLoadingCheck(); }
-            });
-            let hostname = "{{ url('/') }}";
-            FilePond.setOptions({
-                server: {
-                    url: hostname + '/admin/upload',
-                    headers:{
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                }
-            });
-            function isLoadingCheck(){
-                var isLoading = pond.getFiles().filter(x=>x.status !== 5).length !== 0;
-                if(isLoading) {
-                    $('#submit').attr("disabled", "disabled");
-                } else {
-                    $('#submit').removeAttr("disabled");
-                }
-            }
-        });
-    </script>
-
+    @include('admin.songs.js')
 @endsection
