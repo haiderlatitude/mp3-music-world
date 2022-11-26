@@ -3,13 +3,11 @@
 namespace App\DataTables;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UsersListDataTable extends DataTable
@@ -23,21 +21,25 @@ class UsersListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->editColumn('created_at', function ($user) {
-            return Carbon::createFromDate($user->created_at)->diffForHumans();
-        })
-        ->editColumn('updated_at', function ($user) {
-            return Carbon::createFromDate($user->updated_at)->diffForHumans();
-        });
+            ->editColumn('created_at', function ($user) {
+                return Carbon::createFromDate($user->created_at)->diffForHumans();
+            })
+            ->editColumn('updated_at', function ($user) {
+                return Carbon::createFromDate($user->updated_at)->diffForHumans();
+            })
+            ->addColumn('action', function (){
+
+            })
+            ->addIndexColumn();
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\UsersList $model
+     * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(UsersList $model): QueryBuilder
+    public function query(User $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -50,24 +52,24 @@ class UsersListDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('userslist-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->searching(true)
-                    ->deferRender(true)
-                    ->stateSave(true)
-                    ->serverSide(true)
-                    ->pagingType('full_numbers')
-                    ->fixedHeaderHeader(true)
-                    ->responsive(true)
-                    ->autoWidth(true)
-                    ->select(true)->parameters(
-                        [
-                            'select.className' => 'alert alert-success',
-                            'select.blurable' => true,
-                        ]
-                    )
-                    ->orderBy(0, 'asc');
+            ->setTableId('userslist-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->searching(true)
+            ->deferRender(true)
+            ->stateSave(true)
+            ->serverSide(true)
+            ->pagingType('full_numbers')
+            ->fixedHeaderHeader(true)
+            ->responsive(true)
+            ->autoWidth(true)
+            ->select(true)->parameters(
+                [
+                    'select.className' => 'alert alert-success',
+                    'select.blurable' => true,
+                ]
+            )
+            ->orderBy(0, 'asc');
     }
 
     /**
@@ -78,11 +80,12 @@ class UsersListDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex', 'id') -> title('Sr. No'),
-            Column::make('name') -> title('Name'),
-            Column::make('username') -> title('Username'),
-            Column::make('email') -> title('Email'),
-            Column::make('payment_status') -> title('Registration'),
+            Column::make('DT_RowIndex', 'id')
+                ->title('Sr. No'),
+            Column::make('name')->title('Name'),
+            Column::make('username')->title('Username'),
+            Column::make('email')->title('Email'),
+            Column::make('payment_status')->title('Premium User'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action'),

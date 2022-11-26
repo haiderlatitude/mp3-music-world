@@ -3,7 +3,7 @@
 @section('body')
     @if(session()->has('message'))
         <div class="text-center pb-3">
-        {{ session('message') }}
+            {{ session('message') }}
         </div>
     @endif
 
@@ -11,8 +11,8 @@
     {{ $dataTable -> table()}}
 @endsection
 
-@section('usersjs')
-    @include('admin.songs.usersjs')
+@section('js')
+    @include('admin.users.js')
 @endsection
 
 @push('scripts')
