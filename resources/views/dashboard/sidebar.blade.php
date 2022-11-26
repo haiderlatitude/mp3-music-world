@@ -17,7 +17,10 @@
                     <a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> <span>Users</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> <span>Add Artist</span></a>
+                    <a href="{{ route('artists.index') }}"><i class="fa fa-dashboard"></i> <span>Artists</span></a>
+                </li>
+                <li>
+                    <a href="{{ route('artists.create') }}"><i class="fa fa-dashboard"></i> <span>Add Artist</span></a>
                 </li>
                 @endhasrole
 

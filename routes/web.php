@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminSongsController;
-
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ArtistController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -42,4 +42,5 @@ Route::prefix('admin')
         Route::get('clear_temp', [AdminSongsController::class, 'clearTemp']);
         Route::post('artists/get_artists', [AdminSongsController::class, 'getArtists']);
         Route::resource('users', AdminUserController::class);
+        Route::resource('artists', ArtistController::class);
     });

@@ -12,8 +12,6 @@
             <div class="row">
                 @section('body')
                 @show
-                {{--                <div class="col-sm-12">--}}
-                {{--                </div>--}}
             </div>
         </div>
     </div>

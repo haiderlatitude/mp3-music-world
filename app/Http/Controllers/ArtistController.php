@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
+use Illuminate\Http\Request;
+use App\DataTables\ArtistDataTable;
 use App\Models\Artist;
 
 class ArtistController extends Controller
@@ -13,9 +15,9 @@ class ArtistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ArtistDataTable $dataTable)
     {
-        //
+        return $dataTable -> render('admin.artists.index');
     }
 
     /**
@@ -25,7 +27,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.artists.create');
     }
 
     /**
@@ -34,9 +36,14 @@ class ArtistController extends Controller
      * @param \App\Http\Requests\StoreArtistRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreArtistRequest $request)
+    public function store(Request $request)
     {
-        //
+        $artist = new Artist();
+        $artist->name = $request->all()['artist-name'];
+        $artist->save();
+
+        return redirect()->intended('admin/artists/create')
+        ->with('message', 'Artist added successfully.');
     }
 
     /**

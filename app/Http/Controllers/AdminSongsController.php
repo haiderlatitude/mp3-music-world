@@ -52,7 +52,7 @@ class AdminSongsController extends Controller
         $music->save();
         Storage::deleteDirectory('songs/temp/' . $file[0]);
 
-        return redirect()->intended('admin/songs')
+        return redirect()->intended('admin/songs/create')
             ->with('message', 'Song uploaded successfully.');
     }
 

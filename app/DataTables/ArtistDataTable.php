@@ -2,15 +2,18 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
+use App\Models\Artist;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersListDataTable extends DataTable
+class ArtistDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,8 +24,8 @@ class UsersListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($user) {
-                return view('admin.users.buttons', compact('user'));
+            ->addColumn('action', function ($artist) {
+                return view('admin.artists.buttons', compact('artist'));
             })
             ->editColumn('created_at', function ($user) {
                 return Carbon::createFromDate($user->created_at)->diffForHumans();
@@ -36,10 +39,10 @@ class UsersListDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\User $model
+     * @param \App\Models\Artist $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model): QueryBuilder
+    public function query(Artist $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -52,24 +55,24 @@ class UsersListDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('userslist-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->searching(true)
-            ->deferRender(true)
-            ->stateSave(true)
-            ->serverSide(true)
-            ->pagingType('full_numbers')
-            ->fixedHeaderHeader(true)
-            ->responsive(true)
-            ->autoWidth(true)
-            ->select(true)->parameters(
-                [
-                    'select.className' => 'alert alert-success',
-                    'select.blurable' => true,
-                ]
-            )
-            ->orderBy(0, 'asc');
+                    ->setTableId('artist-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->searching(true)
+                    ->deferRender(true)
+                    ->stateSave(true)
+                    ->serverSide(true)
+                    ->pagingType('full_numbers')
+                    ->fixedHeaderHeader(true)
+                    ->responsive(true)
+                    ->autoWidth(true)
+                    ->select(true)->parameters(
+                        [
+                            'select.className' => 'alert alert-success',
+                            'select.blurable' => true,
+                        ]
+                    )
+                    ->orderBy(0, 'asc');
     }
 
     /**
@@ -80,15 +83,12 @@ class UsersListDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex', 'id')
-                ->title('Sr. No'),
-            Column::make('name')->title('Name'),
-            Column::make('username')->title('Username'),
-            Column::make('email')->title('Email'),
-            Column::make('payment_status')->title('Premium User'),
+            Column::make('DT_RowIndex', 'id')->title('Sr. No'),
+            Column::make('name')->title('Artist Name'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action'),
+
         ];
     }
 
@@ -99,6 +99,6 @@ class UsersListDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'UsersList_' . date('YmdHis');
+        return 'Artist_' . date('YmdHis');
     }
 }
