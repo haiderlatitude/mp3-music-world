@@ -13,6 +13,12 @@
                 <li>
                     <a href="{{ route('songs.create') }}"><i class="fa fa-dashboard"></i> <span>Upload a Song</span></a>
                 </li>
+                <li>
+                    <a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> <span>Users</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-dashboard"></i> <span>Add Artist</span></a>
+                </li>
                 @endhasrole
 
             </ul>

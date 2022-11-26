@@ -43,7 +43,6 @@ class AdminSongsController extends Controller
         $music = new  Music();
         $music->name = $request->all()['song-name'];
         $music->artist_id = 1;
-
         $temp = $request->all()['song'];
         $file = explode('@', $temp);
 
@@ -121,8 +120,6 @@ class AdminSongsController extends Controller
         if ($request->hasFile('song')){
             $file = $request->file('song');
             $fileName = $file->getClientOriginalName();
-            $mime = File::getMimeType($file);
-//            dd($mime);
             $folder = uniqid();
             $file->storeAs('songs/temp/' . $folder, $fileName);
 

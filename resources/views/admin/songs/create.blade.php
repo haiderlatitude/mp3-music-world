@@ -3,7 +3,9 @@
 @section('body')
 
     @if(session()->has('message'))
+        <div class="text-center pb-3">
         {{ session('message') }}
+        </div>
     @endif
     <div class="card-box">
         <form action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
@@ -38,7 +40,7 @@
                 <div class="input-group-append">
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit" value="submit" id="submit">Submit</button>
+            <button class="btn btn-primary" type="submit" value="submit" id="submit">Upload</button>
 
         </form>
 

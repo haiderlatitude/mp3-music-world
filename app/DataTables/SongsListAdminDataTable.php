@@ -65,12 +65,8 @@ class SongsListAdminDataTable extends DataTable
             ->serverSide(true)
             ->pagingType('full_numbers')
             ->fixedHeaderHeader(true)
-//            ->paging(false)
             ->responsive(true)
             ->autoWidth(true)
-//            ->scroller(true)
-//            ->scrollY(true)
-//            ->scrollX(true)
             ->select(true)->parameters(
                 [
                     'select.className' => 'alert alert-success',

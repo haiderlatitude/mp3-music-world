@@ -1,4 +1,4 @@
-@extends('dashboard.app', ['title' => 'Songs List'])
+@extends('dashboard.app', ['title' => 'All Songs'])
 
 @section('body')
     @if(session()->has('message'))
@@ -6,8 +6,6 @@
         {{ session('message') }}
     </div>
     @endif
-
-    <!-- <a href="{{ route('songs.create') }}">Upload a Song</a> -->
 
     {{ $dataTable->table() }}
 @endsection
