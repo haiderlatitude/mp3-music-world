@@ -16,8 +16,6 @@
         timerProgressBar: true,
         didOpen: (toast) => {
             table.DataTable().ajax.reload();
-            // toast.addEventListener('mouseenter', Swal.stopTimer)
-            // toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
 
@@ -84,8 +82,6 @@
                 let data = JSON.stringify(response);
                 let artists = $.parseJSON(data);
 
-                // console.log(faculties);
-
                 let html = '<select class="form-control" id="pick-artist">';
                 artists.forEach(function (artist) {
                     if (artist.id === artistId){
@@ -105,9 +101,7 @@
 
                         let artist = $('#pick-artist').find(':selected').attr('id');
                         let name = $('#song-name').val();
-                        // console.log(faculty);
-                        // console.log(name);
-
+                       
                         if (artist && name) {
 
                             let song = {
