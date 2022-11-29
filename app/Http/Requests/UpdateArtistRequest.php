@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateArtistRequest extends FormRequest
 {
@@ -13,7 +14,8 @@ class UpdateArtistRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::user()->hasRole('Admin')) return true;
+        else return false;
     }
 
     /**

@@ -23,18 +23,18 @@ class ArtistController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        return view('admin.artists.create'); 
+        return view('admin.artists.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreArtistRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -77,17 +77,25 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        dd($artist, $request->json()->all());
+        //update here...
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Artist $artist
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Artist $artist)
     {
-        echo "artist contoller";
+        $artist->delete();
+
+        return response()->json(
+            [
+                'type' => 'success',
+                'message' => 'artist deleted successfully.'
+            ]
+        );
     }
 }
