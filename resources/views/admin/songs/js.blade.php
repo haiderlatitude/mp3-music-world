@@ -153,4 +153,48 @@
 
     }
 
+    /*****************************
+     * Delete song functinality
+     *****************************/
+
+    $.fn.deleteSong = function(){
+        let id = $(this).data('id');
+
+        let songToDelete = {
+            _token: "{{ csrf_token() }}"
+        }
+        
+        Swal.fire({
+            title: "Are you sure? You are going to delete this song!",
+            text: "This action can't be Undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            preConfirm: () => {
+                return $.ajax({
+                    url: hostname + '/admin/songs/' + id,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(songToDelete),
+                    success: function (response) {
+                        let data = JSON.stringify(response);
+                        let status = $.parseJSON(data);
+                        Toast.fire({
+                            icon: status.type,
+                            title: status.message,
+                        });
+                    },
+                    error: function (response) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: JSON.stringify(response),
+                        });
+                    },
+                });
+            }
+        });
+    }
 </script>

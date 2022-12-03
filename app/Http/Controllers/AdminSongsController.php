@@ -109,14 +109,22 @@ class AdminSongsController extends Controller
      */
     public function destroy($id)
     {
+        $music = Music::query()->find($id);
+        $filePath = explode("/", $music['file_path']);
+        $directory = $filePath[0];
+        Storage::deleteDirectory('songs/'.$directory);
+        $music->delete();
         
+        return response()->json(
+            [
+                'type' => 'success',
+                'message' => 'Song has been deleted successfully',
+            ]
+        );
     }
 
 
     public function upload(Request $request){
-//        $request->validate([
-//           'song' => 'mimetypes:audio/mpeg'
-//        ]);
         if ($request->hasFile('song')){
             $file = $request->file('song');
             $fileName = $file->getClientOriginalName();

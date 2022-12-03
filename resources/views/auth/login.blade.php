@@ -16,7 +16,7 @@
                     <x-jet-validation-errors class="alert alert-danger alert-dismissible fade show" />
                     <div class="form-group">
                         <label>Username or Email</label>
-                        <x-jet-input id="email" class="form-control" type="email" name="email" :value="old('email')"
+                        <x-jet-input id="login" class="form-control" type="login" name="login" :value="old('login')"
                                      required autofocus/>
                     </div>
                     <div class="form-group">

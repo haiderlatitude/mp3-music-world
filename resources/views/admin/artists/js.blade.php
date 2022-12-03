@@ -33,7 +33,7 @@
                 if(artistName){
                     let artist = {
                         _token: '{{ csrf_token() }}',
-                        name: name,
+                        name: artistName,
                     }
 
                     return $.ajax({
@@ -88,8 +88,8 @@
             text: "Once deleted, you will not be able to recover this Artist!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!',
             showLoaderOnConfirm: true,
             preConfirm: () => {

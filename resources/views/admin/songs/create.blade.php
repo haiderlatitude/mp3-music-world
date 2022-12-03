@@ -44,7 +44,7 @@
 
         </form>
 
-        <a href="{{ url('admin/clear_temp') }}" class="btn btn-danger mt-2">Clear Temp Folder</a>
+        <a href="{{ url('admin/clear_temp') }}" class="btn btn-danger mt-2">Delete Temporary Files</a>
 
 @endsection
 

@@ -38,12 +38,19 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
+        try{
         $artist = new Artist();
         $artist->name = $request->all()['artist-name'];
         $artist->save();
 
         return redirect()->intended('admin/artists/create')
         ->with('message', 'Artist added successfully.');
+        }
+
+        catch(Exception $e){
+            return redirect()->intended('admin/artists/create')
+            ->with('message', 'Artist added successfully.');
+        }
     }
 
     /**
@@ -77,8 +84,22 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        dd($artist, $request->json()->all());
-        //update here...
+        try{
+            $artist->name = $request->all()['name'];
+            $artist->save();
+
+            return response()->json([
+                'type' => 'success',
+                'message' => 'Artist has been updated successfully'
+            ]);
+        }
+
+        catch(Exception $e){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Oops! Something bad is going on :('
+            ]);
+        }
     }
 
     /**
@@ -89,13 +110,22 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
+        try{
         $artist->delete();
-
         return response()->json(
             [
                 'type' => 'success',
                 'message' => 'artist deleted successfully.'
-            ]
-        );
+            ]);
+        }
+        
+        catch(Exception $e){
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'message' => "Can't delete Artist, because it has a song"
+                ]);
+        }
+
     }
 }

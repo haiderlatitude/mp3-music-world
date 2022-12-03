@@ -20,7 +20,11 @@
                         <x-jet-input id="name" class="form-control" type="text" name="name" :value="old('name')" required
                                     autofocus autocomplete="name"/>
                     </div>
-
+                    <div class='form-group'>
+                        <x-jet-label for="username" value="{{ __('Username') }}"/>
+                        <x-jet-input id="username" class="form-control" type="text" name="username" :value="old('username')" required
+                                    autofocus autocomplete="username"/>
+                    </div>
                     <div class="form-group">
                         <x-jet-label for="email" value="{{ __('Email') }}"/>
                         <x-jet-input id="email" class="form-control" type="email" name="email" :value="old('email')"
