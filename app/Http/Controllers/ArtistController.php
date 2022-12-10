@@ -47,9 +47,9 @@ class ArtistController extends Controller
         ->with('message', 'Artist added successfully.');
         }
 
-        catch(Exception $e){
+        catch(\Exception $e){
             return redirect()->intended('admin/artists/create')
-            ->with('message', 'Artist added successfully.');
+            ->with('message', 'The Artist is stubborn, please try again later!');
         }
     }
 
@@ -94,7 +94,7 @@ class ArtistController extends Controller
             ]);
         }
 
-        catch(Exception $e){
+        catch(\Exception $e){
             return response()->json([
                 'type' => 'error',
                 'message' => 'Oops! Something bad is going on :('
@@ -119,11 +119,11 @@ class ArtistController extends Controller
             ]);
         }
         
-        catch(Exception $e){
+        catch(\Exception $e){
             return response()->json(
                 [
                     'type' => 'error',
-                    'message' => "Can't delete Artist, because it has a song"
+                    'message' => "Can't delete Artist, they might have a song."
                 ]);
         }
 

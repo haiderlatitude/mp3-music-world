@@ -6,6 +6,7 @@
                 <li>
                     <a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li>
+                
                 @hasrole(\App\Utils\Roles::$ADMIN)
                 <li>
                     <a href="{{ url('admin/songs') }}"><i class="fa fa-dashboard"></i> <span>Songs</span></a>
@@ -24,6 +25,9 @@
                 </li>
                 @endhasrole
 
+                <li>
+                    <a href="{{ url('#') }}"><i class="fa fa-dashboard"></i> <span>Create Playlist</span></a>
+                </li>
             </ul>
         </div>
     </div>
