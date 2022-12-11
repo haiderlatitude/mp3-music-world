@@ -80,7 +80,7 @@ class ArtistController extends Controller
      *
      * @param \App\Http\Requests\UpdateArtistRequest $request
      * @param \App\Models\Artist $artist
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
@@ -118,7 +118,7 @@ class ArtistController extends Controller
                 'message' => 'artist deleted successfully.'
             ]);
         }
-        
+
         catch(\Exception $e){
             return response()->json(
                 [

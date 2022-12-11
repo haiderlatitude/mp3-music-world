@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
+use App\Models\Music;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersListDataTable extends DataTable
+class MusicDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,24 +21,25 @@ class UsersListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function ($user) {
-                return Carbon::createFromDate($user->created_at)->diffForHumans();
+            ->addColumn('action', function ($music) {
+                return view('admin.songs.buttons', compact('music'));
             })
-            ->editColumn('updated_at', function ($user) {
-                return Carbon::createFromDate($user->updated_at)->diffForHumans();
+            ->addColumn('artist', function ($music) {
+                return $music->artist->name;
             })
+            ->rawColumns(['action'])
             ->addIndexColumn();
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\User $model
+     * @param \App\Models\Music $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model): QueryBuilder
+    public function query(Music $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('artist');
     }
 
     /**
@@ -49,7 +50,7 @@ class UsersListDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('userslist-table')
+            ->setTableId('music-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->searching(true)
@@ -67,6 +68,7 @@ class UsersListDataTable extends DataTable
                 ]
             )
             ->orderBy(0, 'asc');
+
     }
 
     /**
@@ -78,13 +80,12 @@ class UsersListDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex', 'id')
-                ->title('Sr. No'),
-            Column::make('name')->title('Name'),
-            Column::make('username')->title('Username'),
-            Column::make('email')->title('Email'),
-            Column::make('payment_status')->title('Premium User'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->title('Sr#.'),
+            Column::make('name')
+                ->title('Song Name'),
+            Column::computed('artist')
+                ->title('Artist'),
+            Column::computed('action'),
         ];
     }
 
@@ -95,6 +96,6 @@ class UsersListDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'UsersList_' . date('YmdHis');
+        return 'Music_' . date('YmdHis');
     }
 }

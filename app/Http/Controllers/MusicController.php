@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\MusicDataTable;
 use App\Http\Requests\StoreMusicRequest;
 use App\Http\Requests\UpdateMusicRequest;
 use App\Models\Music;
+use function Termwind\render;
 
 class MusicController extends Controller
 {
@@ -13,9 +15,9 @@ class MusicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MusicDataTable $dataTable)
     {
-        //
+        return  $dataTable->render('dashboard');
     }
 
     /**
