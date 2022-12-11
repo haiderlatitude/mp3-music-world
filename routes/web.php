@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\MusicController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -26,10 +27,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\MusicController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [MusicController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard/{id}', [MusicController::class, 'playSong']);
     });
-
-// Route::view('test', 'test');
 
 //Admin Routes...
 Route::prefix('admin')

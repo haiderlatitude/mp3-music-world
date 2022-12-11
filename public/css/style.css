@@ -75,6 +75,11 @@ body {
     height: 100%;
 }
 
+#audio-player{
+    position: relative;
+    /* padding-top: 40%; */
+}
+
 h1,
 h2,
 h3,

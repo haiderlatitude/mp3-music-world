@@ -22,7 +22,7 @@ class MusicDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($music) {
-                return view('admin.songs.buttons', compact('music'));
+                return view('dashboard.playButton', compact('music'));
             })
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;

@@ -16,4 +16,21 @@
     function logout() {
         document.getElementById("logout").submit();
     }
+
+    $.fn.playSong = function(){
+        let hostname = "{{ url('') }}";
+        let id = $(this).data('id');
+        let token = {
+            _token: "{{ csrf_token() }}"
+        }
+ 
+        return $.ajax({
+            url: hostname + '/dashboard/' + id,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(token)
+        });
+    }
+
 </script>

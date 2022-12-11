@@ -190,7 +190,7 @@
                     error: function (response) {
                         Toast.fire({
                             icon: 'error',
-                            title: JSON.stringify(response),
+                            title: 'Some error occurred!',
                         });
                     },
                 });
