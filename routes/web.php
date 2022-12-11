@@ -18,17 +18,18 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+//Route::get('/', function () {
+////    return view('auth.login');
+//});
+
+Route::get('/', [MusicController::class, 'index'])->name('dashboard');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', [MusicController::class, 'index'])->name('dashboard');
-    Route::post('/dashboard/{id}', [MusicController::class, 'playSong']);
+
     });
 
 //Admin Routes...
@@ -42,3 +43,5 @@ Route::prefix('admin')
         Route::resource('users', AdminUserController::class);
         Route::resource('artists', ArtistController::class);
     });
+
+//Premium...
