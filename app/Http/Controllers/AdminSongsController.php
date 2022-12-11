@@ -42,7 +42,7 @@ class AdminSongsController extends Controller
     {
         $music = new  Music();
         $music->name = $request->all()['song-name'];
-        $music->artist_id = 1;
+        $music->artist_id = $request->all()['artist-id'];
         $temp = $request->all()['song'];
         $file = explode('@', $temp);
 
@@ -105,7 +105,7 @@ class AdminSongsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -114,7 +114,7 @@ class AdminSongsController extends Controller
         $directory = $filePath[0];
         Storage::deleteDirectory('songs/'.$directory);
         $music->delete();
-        
+
         return response()->json(
             [
                 'type' => 'success',
