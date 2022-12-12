@@ -8,13 +8,11 @@
     <i class="bi bi-play"> </i>
 </button>
 
-@if(auth()->check())
+@auth
     <a type="button"
-       class="btn btn-outline-primary rounded-circle btn-sm deletebtn d-inline"
+       class="btn rounded-circle btn-sm deletebtn d-inline"
        data-toggle="tooltip" data-placement="top" title="Download"
-
-       href="songs/{{ $music->file_path }}">
+       href="songs/{{ $music->file_path }}" download>
         <i class="bi bi-download"> </i>
     </a>
-@endif
-
+@endauth

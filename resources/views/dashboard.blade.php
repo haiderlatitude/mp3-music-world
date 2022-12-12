@@ -5,9 +5,7 @@
         {!! $dataTable->table() !!}
         <div class="relative-bottom row">
             <audio id="player" controls="controls">
-
-                <source id="ogg_src" src="" type="audio/ogg"/>
-                Your browser does not support the audio element.
+                <source id="source" src="" type="audio/mpeg"/>
             </audio>
         </div>
     </div>
@@ -20,16 +18,12 @@
 
         $.fn.playSong = function () {
             let url = $(this).data('file-path');
-
-            console.log(url)
             let player = $('#player');
-            $("#ogg_src").attr("src", 'songs/' + url);
-            // console.log($("#ogg_src").attr("src", url));
+            $("#source").attr("src", 'songs/' + url);
 
             player[0].pause();
             player[0].load();
             player[0].oncanplaythrough = player[0].play();
-            console.log('appent');
         }
 
     </script>

@@ -85,10 +85,4 @@ class MusicController extends Controller
     {
         //
     }
-
-    public function playSong($id){
-        $song = Music::find($id);
-        $filePath = $song['file_path'];
-        return view('dashboard', compact('filePath'));
-    }
 }
