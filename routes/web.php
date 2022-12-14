@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
+use App\Http\Controllers\PlaylistController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -28,7 +29,9 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {});
+])->group(function () {
+    Route::resource('playlist', PlaylistController::class);
+});
 
 //Admin Routes...
 Route::prefix('admin')

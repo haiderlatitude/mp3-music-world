@@ -4,13 +4,13 @@
             <ul>
                 <br>
                 <br>
-                
+
                 <li class="menu-title text-center">Management</li>
                 @auth
-                <li>
-                    <a href="{{ route('users.index') }}"><i class="fa fa-person"></i> <span>Profile</span></a>
-                </li>
-                <hr>
+                    <li>
+                        <a href="{{ route('users.index') }}"><i class="fa fa-person"></i> <span>Profile</span></a>
+                    </li>
+                    <hr>
                 @endauth
                 @hasrole(\App\Utils\Roles::$ADMIN)
                 <li>
@@ -32,15 +32,18 @@
                 @endhasrole
 
 
-
                 @if(auth()->check())
+                    <li>
+                        <a href="{{ route('playlist.index') }}"><i class="fa fa-microphone"></i> <span>Playlists</span></a>
+                    </li>
+                    <hr>
                     <form method="POST" id="logout" action="{{ route('logout') }}" x-data>
                         @csrf
                         <div class="text-center">
                             <li>
                                 <button onclick="logout()" class="btn btn-primary bg-danger">
                                     <i class="fa"></i>
-                                        <span>Logout</span>
+                                    <span>Logout</span>
                                 </button>
                             </li>
                         </div>
