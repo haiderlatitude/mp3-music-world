@@ -5,10 +5,10 @@
                 <br>
                 <br>
 
-                <li class="menu-title text-center">Management</li>
+                <li class="menu-title text-center">Management</li><hr>
                 @auth
                     <li>
-                        <a href="{{ route('users.index') }}"><i class="fa fa-person"></i> <span>Profile</span></a>
+                        <a href="{{ route('profile') }}"><i class="fa fa-user"></i> <span>Profile</span></a>
                     </li>
                     <hr>
                 @endauth
@@ -20,7 +20,7 @@
                     <a href="{{ route('songs.create') }}"><i class="fa fa-music"></i> <span>Upload a Song</span></a>
                 </li>
                 <li>
-                    <a href="{{ route('users.index') }}"><i class="fa fa-person"></i> <span>Users</span></a>
+                    <a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>Users</span></a>
                 </li>
                 <li>
                     <a href="{{ route('artists.index') }}"><i class="fa fa-microphone"></i> <span>Artists</span></a>
@@ -51,15 +51,12 @@
                 @else
 
                     <li>
-                        <a href="{{ route('login') }}"><i class="fa fa-person"></i> <span>Login</span></a>
+                        <a href="{{ route('login') }}"><i class="fa fa-user"></i> <span>Login</span></a>
                     </li>
-
+                    <li>
+                        <a href="{{ route('register') }}"><i class="fa fa-user"></i> <span>Register</span></a>
+                    </li>
                 @endif
-
-                {{--                <li>--}}
-                {{--                    <a href="{{ url('#') }}"><i class="fa fa-dashboard"></i> <span>Create Playlist</span></a>--}}
-                {{--                </li>--}}
-
             </ul>
         </div>
     </div>

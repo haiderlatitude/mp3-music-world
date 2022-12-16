@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\PlaylistDataTable;
 use App\Http\Requests\StorePlaylistRequest;
 use App\Http\Requests\UpdatePlaylistRequest;
+use Illuminate\Http\Request;
 use App\Models\Playlist;
 
 class PlaylistController extends Controller
@@ -35,9 +36,15 @@ class PlaylistController extends Controller
      * @param \App\Http\Requests\StorePlaylistRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePlaylistRequest $request)
+    public function store(Request $request)
     {
-        //
+        $playlist = new Playlist();
+        $playlist->name = $request->all()['playlist-name'];
+        $playlist->save();
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Playlist added successfully.'
+        ]);
     }
 
     /**
@@ -66,12 +73,26 @@ class PlaylistController extends Controller
      * Update the specified resource in storage.
      *
      * @param \App\Http\Requests\UpdatePlaylistRequest $request
-     * @param \App\Models\Playlist $playlist
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePlaylistRequest $request, Playlist $playlist)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+        $playlist = Playlist::query()->find($id);
+        $playlist->name = $request->name;
+        $playlist->save();
+        return response([
+            'type' => 'success',
+            'message' => 'Playlist Name edited successfully.'
+        ]);
+        }
+        catch(\Exception $e){
+            return response([
+                'type' => 'error',
+                'message' => 'Could not update playlist name.'
+            ]);
+        }
     }
 
     /**
@@ -80,8 +101,13 @@ class PlaylistController extends Controller
      * @param \App\Models\Playlist $playlist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Playlist $playlist)
+    public function destroy($id)
     {
-        //
+        $playlist = Playlist::query()->find($id);
+        $playlist->delete();
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

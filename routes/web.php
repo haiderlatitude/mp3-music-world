@@ -19,10 +19,6 @@ use App\Models\User;
 |
 */
 
-//Route::get('/', function () {
-////    return view('auth.login');
-//});
-
 Route::get('/', [MusicController::class, 'index'])->name('dashboard');
 
 Route::middleware([
@@ -31,6 +27,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::resource('playlist', PlaylistController::class);
+    Route::view('profile', 'profile')->name('profile');
 });
 
 //Admin Routes...
@@ -44,5 +41,3 @@ Route::prefix('admin')
         Route::resource('users', AdminUserController::class);
         Route::resource('artists', ArtistController::class);
     });
-
-//Premium...

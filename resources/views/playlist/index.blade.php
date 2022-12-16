@@ -7,9 +7,12 @@
         </div>
     @endif
 
-    <button class="btn btn-primary">
-        + Add Playlist
-    </button>
+    <div>
+        <button onclick="$(this).addPlaylist()" class="btn btn-primary mb-5">
+            + Add Playlist
+        </button>
+    </div>
+
     {{ $dataTable->table() }}
 @endsection
 

@@ -1,9 +1,11 @@
-<a type="submit"
-   href="playlist/{{ $playlist->id }}"
-   class="btn btn-outline-primary rounded-circle btn-sm deletebtn d-inline"
-   data-toggle="tooltip" data-placement="top" title="Edit Playlist">
+<button type="submit"
+        onclick="$(this).editPlaylist()"
+        class="btn btn-outline-primary rounded-circle btn-sm deletebtn d-inline"
+        data-toggle="tooltip" data-placement="top" title="Edit Playlist"
+        data-id="{{ $playlist->id }}"
+        data-name="{{ $playlist->name }}">
     <i class="bi bi-pen"> </i>
-</a>
+</button>
 
 <button type="submit"
         onclick="$(this).deletePlaylist()"
