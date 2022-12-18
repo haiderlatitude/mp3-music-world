@@ -98,7 +98,7 @@
                     html: html,
 
                     preConfirm: (input) => {
-
+                        
                         let artist = $('#pick-artist').find(':selected').attr('id');
                         let name = $('#song-name').val();
                        

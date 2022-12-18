@@ -20,6 +20,7 @@
 
 
     $.fn.addPlaylist = function() {
+        
         Swal.fire({
             title: 'Add Playlist',
             html: '<input type="text" id="playlist" class="form-control" name="playlist" placeholder="Enter Playlist Name">',
@@ -52,18 +53,21 @@
                                     });
                                 },
                         error: function (response) {
+                                    let data = JSON.stringify(response);
+                                    let status = $.parseJSON(data);
                                     Toast.fire({
-                                        icon: 'error',
-                                        title: 'An error occurred!'
+                                        icon: status.type,
+                                        title: status.message,
                                     });
                                 }
                     });
 
                 }
                 else{
-                    Swal.showValidationMessage('Please Enter Values.');
+                    Swal.showValidationMessage('Please Enter a name.');
                 }
             }
+
         });
     }
 
@@ -106,9 +110,11 @@
                                         });
                                     },
                         error: function () {
+                                        let data = JSON.stringify(response);
+                                        let status = $.parseJSON(data);
                                         Toast.fire({
-                                            icon: 'error',
-                                            title: 'An error occurred! Try Again.'
+                                            icon: status.type,
+                                            title: status.message,
                                         });
                                     }
                     });
@@ -147,17 +153,21 @@
                     data: JSON.stringify(token),
 
                     success: function(response){
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Playlist has been deleted'
-                        });
+                                    let data = JSON.stringify(response);
+                                    let status = $.parseJSON(data);
+                                    Toast.fire({
+                                        icon: status.type,
+                                        title: status.message,
+                                    });
                     },
 
                     error: function(response){
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'An error occurred!'
-                        });
+                                    let data = JSON.stringify(response);
+                                    let status = $.parseJSON(data);
+                                    Toast.fire({
+                                        icon: status.type,
+                                        title: status.message,
+                                    });
                     }
                 });
             }

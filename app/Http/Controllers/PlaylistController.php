@@ -33,18 +33,27 @@ class PlaylistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StorePlaylistRequest $request
+     * @param \Illuminate\Http\Request;
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $playlist = new Playlist();
-        $playlist->name = $request->all()['playlist-name'];
-        $playlist->save();
-        return response()->json([
-            'type' => 'success',
-            'message' => 'Playlist added successfully.'
-        ]);
+        try{
+            $playlist = new Playlist();
+            $playlist->name = $request->name;
+            $playlist->user_id = auth()->id();
+            $playlist->save();
+            return response()->json([
+                'type' => 'success',
+                'message' => 'Playlist has been added successfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Some error occurred. Please try again later!'
+            ]);
+        }
     }
 
     /**
@@ -102,12 +111,19 @@ class PlaylistController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $playlist = Playlist::query()->find($id);
-        $playlist->delete();
-        return response()->json([
-            'type' => 'success',
-            'message' => 'Deleted successfully'
-        ]);
+    {   try{
+            $playlist = Playlist::query()->find($id);
+            $playlist->delete();
+            return response()->json([
+                'type' => 'success',
+                'message' => 'Deleted successfully'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Some error occurred during the deletion of Playlist!'
+            ]);
+        }
     }
 }

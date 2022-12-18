@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaylistController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -28,6 +29,8 @@ Route::middleware([
 ])->group(function () {
     Route::resource('playlist', PlaylistController::class);
     Route::view('profile', 'profile')->name('profile');
+    Route::put('update_profile/{id}', [UserController::class, 'update']);
+    Route::put('update_password/{id}', [UserController::class, 'updatePassword']);
 });
 
 //Admin Routes...
