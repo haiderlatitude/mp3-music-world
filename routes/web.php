@@ -6,8 +6,8 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,9 @@ use App\Models\User;
 */
 
 Route::get('/', [MusicController::class, 'index'])->name('dashboard');
+Route::post('/email', [EmailController::class, 'send'])->name('email');
+Route::put('reset-password/{email}', [UserController::class, 'resetPassword']);
+Route::view('reset-password', 'auth.reset-password');
 
 Route::middleware([
     'auth:sanctum',
@@ -29,7 +32,7 @@ Route::middleware([
 ])->group(function () {
     Route::resource('playlist', PlaylistController::class);
     Route::view('profile', 'profile')->name('profile');
-    Route::put('update_profile/{id}', [UserController::class, 'update']);
+    Route::put('update_profile/{id}', [UserController::class, 'updateProfile']);
     Route::put('update_password/{id}', [UserController::class, 'updatePassword']);
 });
 

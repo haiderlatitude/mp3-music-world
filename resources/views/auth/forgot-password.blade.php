@@ -13,15 +13,15 @@
                 {{ __('Enter your email address so we can send you a password reset link.') }}
                 </div>
 
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
+        @if(session()->has('message'))
+            <div class="mb-4 font-medium text-sm text-danger">
+                {{ session('message') }}
             </div>
         @endif
 
         <x-jet-validation-errors class="mb-4"/>
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('email') }}">
             @csrf
 
             <div class="form-group">

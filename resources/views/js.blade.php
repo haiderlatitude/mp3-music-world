@@ -94,4 +94,5 @@ $.fn.editPassword = function(){
         return $('#error').text('Make sure password matches and is 8 charaters long!');
     }
 }
+
 </script>

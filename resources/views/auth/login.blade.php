@@ -13,6 +13,9 @@
                     <div class="account-logo">
                         <a href="{{ url('login') }}"><img src="{{ asset('logo.png') }}" alt="account-logo"></a>
                     </div>
+                    @if(session('message'))
+                        <div>{{ session('message') }}</div>
+                    @endif
                     <x-jet-validation-errors class="alert alert-danger alert-dismissible fade show" />
                     <div class="form-group">
                         <label>Username or Email</label>
@@ -24,12 +27,7 @@
                         <x-jet-input id="password" class="form-control" type="password" name="password" required
                                      autocomplete="current-password"/>
                     </div>
-                    <div class="form-group  text-right">
-                        <label for="remember_me" class=" text-right">
-                            <x-jet-checkbox id="remember_me" name="remember"/>
-                            <span class=" text-right">{{ __('Remember me') }}</span>
-                        </label>
-                    </div>
+                    
                     <div class="form-group text-right">
                         @if (Route::has('password.request'))
                             <a class="form-group  text-right"

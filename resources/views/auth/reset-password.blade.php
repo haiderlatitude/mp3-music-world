@@ -1,39 +1,86 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <!-- <x-jet-authentication-card-logo/> -->
-        </x-slot>
+@extends('dashboard.app', ['title' => 'Reset Password'])
 
-        <x-jet-validation-errors class="mb-4"/>
-
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
-
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-            <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}"/>
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email"
-                             :value="old('email', $request->email)" required autofocus/>
+@section('body')
+<div class="main-wrapper mt-5">
+    <div class="account-page">
+        <div class="account-box">
+            <div class="card-title fw-bold fs-5">Reset Password</div>
+            <div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <x-jet-input id="email" class="form-control" type="text" name="email" required/>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <x-jet-input id="new-password" class="form-control" type="password" name="new-password" required/>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <x-jet-input id="confirm-password" class="form-control" type="password" name="confirm-password" required/>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary" onclick="$(this).resetPassword()">Reset</button>
+                    <div class="text-danger mt-3" id='error' name='error'></div>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+@endsection
 
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}"/>
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                             autocomplete="new-password"/>
-            </div>
+@section('js')
+<script>
+    const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: false,
+    });
+    
+    let hostname = "{{ url('') }}";
 
-            <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}"/>
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                             name="password_confirmation" required autocomplete="new-password"/>
-            </div>
+    $.fn.resetPassword = function(){
+        let email = $('#email').val();
+        let newPassword = $('#new-password').val();
+        let confirmPassword = $('#confirm-password').val();
+        
+        if(newPassword === confirmPassword && ((newPassword.length > 7) && (confirmPassword.length > 7))){
+            let password = {
+                _token: "{{ csrf_token() }}",
+                password: newPassword
+            }
+            
+            $.ajax({
+                url: hostname + '/reset-password/' + email,
+                type: 'put',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(password),
 
-            <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Reset Password') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+                success: function(response){
+                    let data = JSON.stringify(response);
+                    let status = JSON.parse(data);
+                    Toast.fire({
+                        icon: status.type,
+                        title: status.message
+                    });
+                },
+
+                error: function(response){
+                    let data = JSON.stringify(response);
+                    let status = JSON.parse(data);
+                    Toast.fire({
+                        icon: status.type,
+                        title: status.message
+                    });
+                }
+            });
+        }
+        else{
+            return $('#error').text('Make sure password matches and is 8 charaters long!');
+        }
+    }
+
+</script>
+@endsection
