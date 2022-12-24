@@ -17,6 +17,10 @@ class MusicController extends Controller
      */
     public function index(MusicDataTable $dataTable)
     {
+        if (request()->has('p') && (request('p') != null)){
+            $dataTable->setPlaylist(request('p'));
+        }
+
         return  $dataTable->render('dashboard');
     }
 
@@ -34,11 +38,20 @@ class MusicController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreMusicRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreMusicRequest $request)
     {
-        //
+//        dd($request->all());
+        $music = Music::query()->find($request->json()->all()['musicId']);
+        $music->addToPlaylist(request()->json()->all()['playlistId']);
+
+        return response()->json(
+            [
+                'type' => 'success',
+                'message' => 'Song added to playlist',
+            ]
+        );
     }
 
     /**

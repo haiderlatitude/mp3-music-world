@@ -8,7 +8,7 @@
         <div class="account-page">
             <div class="account-center">
                 <div class="account-box">
-                
+
                 <div class="mb-4 text-sm text-gray-600">
                 {{ __('Enter your email address so we can send you a password reset link.') }}
                 </div>
@@ -21,7 +21,7 @@
 
         <x-jet-validation-errors class="mb-4"/>
 
-        <form method="POST" action="{{ route('email') }}">
+        <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
             <div class="form-group">

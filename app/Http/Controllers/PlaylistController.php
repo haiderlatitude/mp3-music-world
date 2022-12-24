@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PlaylistDataTable;
-use App\Http\Requests\StorePlaylistRequest;
-use App\Http\Requests\UpdatePlaylistRequest;
-use Illuminate\Http\Request;
 use App\Models\Playlist;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlaylistController extends Controller
 {
@@ -34,11 +33,11 @@ class PlaylistController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request;
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $playlist = new Playlist();
             $playlist->name = $request->name;
             $playlist->user_id = auth()->id();
@@ -47,8 +46,7 @@ class PlaylistController extends Controller
                 'type' => 'success',
                 'message' => 'Playlist has been added successfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'type' => 'error',
                 'message' => 'Some error occurred. Please try again later!'
@@ -87,16 +85,15 @@ class PlaylistController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-        $playlist = Playlist::query()->find($id);
-        $playlist->name = $request->name;
-        $playlist->save();
-        return response([
-            'type' => 'success',
-            'message' => 'Playlist Name edited successfully.'
-        ]);
-        }
-        catch(\Exception $e){
+        try {
+            $playlist = Playlist::query()->find($id);
+            $playlist->name = $request->name;
+            $playlist->save();
+            return response([
+                'type' => 'success',
+                'message' => 'Playlist Name edited successfully.'
+            ]);
+        } catch (\Exception $e) {
             return response([
                 'type' => 'error',
                 'message' => 'Could not update playlist name.'
@@ -108,22 +105,27 @@ class PlaylistController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Playlist $playlist
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
-    {   try{
+    {
+        try {
             $playlist = Playlist::query()->find($id);
             $playlist->delete();
             return response()->json([
                 'type' => 'success',
                 'message' => 'Deleted successfully'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'type' => 'error',
                 'message' => 'Some error occurred during the deletion of Playlist!'
             ]);
         }
+    }
+
+    public function getPlaylists()
+    {
+        return Playlist::query()->where('user_id', '=', Auth::id())->get();
     }
 }

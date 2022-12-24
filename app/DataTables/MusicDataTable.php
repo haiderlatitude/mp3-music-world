@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Music;
+use App\Models\Playlist;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -12,6 +13,13 @@ use Yajra\DataTables\Services\DataTable;
 
 class MusicDataTable extends DataTable
 {
+    private $playlist = null;
+
+    public function setPlaylist(string $playlist){
+        $this->playlist = $playlist;
+    }
+
+
     /**
      * Build DataTable class.
      *
@@ -22,7 +30,8 @@ class MusicDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($music) {
-                return view('playButton', compact('music'));
+                $playlist = $this->playlist;
+                return view('playButton', compact('music', 'playlist'));
             })
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;
@@ -39,6 +48,10 @@ class MusicDataTable extends DataTable
      */
     public function query(Music $model): QueryBuilder
     {
+        if ($this->playlist){
+            return $model->newQuery()
+                ->whereRelation('playlistSongs', 'name', '=', $this->playlist);
+        }else
         return $model->newQuery()->with('artist');
     }
 

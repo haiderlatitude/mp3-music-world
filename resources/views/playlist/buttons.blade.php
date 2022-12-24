@@ -15,10 +15,10 @@
     <i class="bi bi-trash"> </i>
 </button>
 
-<button type="submit"
-        onclick=""
+<a
+        href="{{ url('/?p=' . $playlist->name) }}"
         class="btn btn-outline-secondary rounded-circle btn-sm d-inline"
         data-toggle="tooltip" data-placement="top" title="Open Playlist"
         data-id="{{ $playlist->id }}">
     <i class="bi bi-arrow-right"> </i>
-</button>
+</a>

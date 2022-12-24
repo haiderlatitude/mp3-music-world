@@ -21,9 +21,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MusicController::class, 'index'])->name('dashboard');
-Route::post('/email', [EmailController::class, 'send'])->name('email');
-Route::put('reset-password/{email}', [UserController::class, 'resetPassword']);
-Route::view('reset-password', 'auth.reset-password');
 
 Route::middleware([
     'auth:sanctum',
@@ -31,9 +28,8 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::resource('playlist', PlaylistController::class);
-    Route::view('profile', 'profile')->name('profile');
-    Route::put('update_profile/{id}', [UserController::class, 'updateProfile']);
-    Route::put('update_password/{id}', [UserController::class, 'updatePassword']);
+    Route::post('getPlaylists', [PlaylistController::class, 'getPlaylists']);
+    Route::post('/', [MusicController::class, 'store']);
 });
 
 //Admin Routes...

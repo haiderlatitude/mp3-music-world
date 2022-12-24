@@ -8,7 +8,7 @@
                 <li class="menu-title text-center">Management</li><hr>
                 @auth
                     <li>
-                        <a href="{{ route('profile') }}"><i class="fa fa-user"></i> <span>Profile</span></a>
+                        <a href="{{ route('profile.show') }}"><i class="fa fa-user"></i> <span>Profile</span></a>
                     </li>
                     <hr>
                 @endauth
