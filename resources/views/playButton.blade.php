@@ -23,7 +23,9 @@
                 onclick="$(this).removeFromPlaylist()"
                 class="btn btn-outline-primary rounded-circle btn-sm  d-inline"
                 data-toggle="tooltip" data-placement="top" title="Remove From Playlist"
-                data-id="{{ $music->id }}">
+                data-id="{{ $music->id }}"
+                data-playlist="{{ $playlist }}"
+        >
             <i class="bi bi-dash"> </i>
         </button>
     @endif

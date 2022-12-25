@@ -30,6 +30,7 @@ Route::middleware([
     Route::resource('playlist', PlaylistController::class);
     Route::post('getPlaylists', [PlaylistController::class, 'getPlaylists']);
     Route::post('/', [MusicController::class, 'store']);
+    Route::post('/remove', [MusicController::class, 'update']);
 });
 
 //Admin Routes...

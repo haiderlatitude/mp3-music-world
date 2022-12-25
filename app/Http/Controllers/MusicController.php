@@ -6,6 +6,7 @@ use App\DataTables\MusicDataTable;
 use App\Http\Requests\StoreMusicRequest;
 use App\Http\Requests\UpdateMusicRequest;
 use App\Models\Music;
+use App\Models\Playlist;
 use function Termwind\render;
 
 class MusicController extends Controller
@@ -44,7 +45,7 @@ class MusicController extends Controller
     {
 //        dd($request->all());
         $music = Music::query()->find($request->json()->all()['musicId']);
-        $music->addToPlaylist(request()->json()->all()['playlistId']);
+        $music->playlistSongs()->syncWithoutDetaching(request()->json()->all()['playlistId']);
 
         return response()->json(
             [
@@ -81,11 +82,23 @@ class MusicController extends Controller
      *
      * @param \App\Http\Requests\UpdateMusicRequest $request
      * @param \App\Models\Music $music
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateMusicRequest $request, Music $music)
+    public function update(UpdateMusicRequest $request)
     {
-        //
+        $music = Music::query()->find($request->json()->all()['musicId']);
+        $music->playlistSongs()->detach(
+            Playlist::findByName(
+                request()->json()->all()['playlist']
+            )
+        );
+
+        return response()->json(
+            [
+                'type' => 'success',
+                'message' => 'Song removed from playlist',
+            ]
+        );
     }
 
     /**
@@ -96,6 +109,6 @@ class MusicController extends Controller
      */
     public function destroy(Music $music)
     {
-        //
+        dd($music);
     }
 }

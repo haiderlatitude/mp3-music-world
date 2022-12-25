@@ -2,7 +2,8 @@
 
 @section('body')
     <div>
-        {!! $dataTable->table() !!}
+        {!! $dataTable->table(['class' => 'table table-striped table-bordered', 'style' => 'width:100%'],
+       true) !!}
         <div class="relative-bottom row">
             <audio id="player" controls="controls">
                 <source id="source" src="" type="audio/mpeg"/>
@@ -96,7 +97,7 @@
                                     musicId: musicId,
                                     playlistId: playlistsId,
                                 }
-                                
+
                                 return $.ajax({
                                     url: hostname,
                                     type: 'Post',
@@ -145,9 +146,53 @@
             })
         }
 
-    $.fn.removeFromPlaylist = function(){
-        return console.log('In remove function');
-    }
+        $.fn.removeFromPlaylist = function () {
+            let musicId = $(this).data('id');
+            let playlist = $(this).data('playlist');
 
+            Swal.fire({
+                title: "You are going to remove song from playlist",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: 'Remove',
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    let payload = {
+                        _token: "{{ csrf_token() }}",
+                        musicId: musicId,
+                        playlist: playlist,
+                    }
+
+                    /***************************************************
+                     *
+                     * Send Delete AJAX request to backend...
+                     *
+                     ***************************************************/
+
+                    return $.ajax({
+                        url: hostname + '/remove',
+                        type: 'post',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        data: JSON.stringify(payload),
+                        success: function (response) {
+                            let data = JSON.stringify(response);
+                            let status = $.parseJSON(data);
+                            Toast.fire({
+                                icon: status.type,
+                                title: status.message,
+                            });
+                        },
+                        error: function () {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'An error occurred!'
+                            });
+                        },
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading(),
+            })
+        }
     </script>
 @endpush
