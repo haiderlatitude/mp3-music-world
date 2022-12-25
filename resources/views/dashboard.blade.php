@@ -96,7 +96,7 @@
                                     musicId: musicId,
                                     playlistId: playlistsId,
                                 }
-                                console.log(data);
+                                
                                 return $.ajax({
                                     url: hostname,
                                     type: 'Post',
@@ -130,6 +130,8 @@
                         allowOutsideClick: false,
                         showCancelButton: true,
                         confirmButtonText: 'Add',
+                        confirmButtonColor: '#009efb',
+                        cancelButtonColor: '#f62d51',
                         showLoaderOnConfirm: true
                     });
 
@@ -142,6 +144,10 @@
                 }
             })
         }
+
+    $.fn.removeFromPlaylist = function(){
+        return console.log('In remove function');
+    }
 
     </script>
 @endpush

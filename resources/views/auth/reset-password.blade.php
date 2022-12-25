@@ -13,7 +13,8 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <x-jet-input id="email" class="form-control" type="text" name="email" :value="old('email', $request->email)" required/>
+                            <x-jet-input id="email" class="form-control" type="text" name="email"
+                                        :value="old('email', $request->email)" required/>
                         </div>
                         <div class="form-group">
                             <label>New Password</label>

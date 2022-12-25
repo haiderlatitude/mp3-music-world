@@ -9,13 +9,6 @@
 </button>
 
 @auth
-    <a type="button"
-       class="btn rounded-circle btn-sm  d-inline"
-       data-toggle="tooltip" data-placement="top" title="Download"
-       href="songs/{{ $music->file_path }}" download>
-        <i class="bi bi-download"> </i>
-    </a>
-
     @if(is_null($playlist))
         <button type="button"
                 onclick="$(this).addToPlaylist()"
@@ -34,5 +27,12 @@
             <i class="bi bi-dash"> </i>
         </button>
     @endif
+
+    <a type="button"
+       class="btn btn-outline-primary rounded-circle btn-sm  d-inline"
+       data-toggle="tooltip" data-placement="top" title="Download"
+       href="songs/{{ $music->file_path }}" download>
+        <i class="bi bi-download"> </i>
+    </a>
 @endauth
 
