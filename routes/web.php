@@ -1,13 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaylistController;
-use App\Http\Controllers\EmailController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
