@@ -14,6 +14,11 @@ class Music extends Model
         return $this->belongsTo(Artist::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function playlistSongs()
     {
         return $this->belongsToMany(

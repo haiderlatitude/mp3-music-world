@@ -33,6 +33,9 @@ class SongsListAdminDataTable extends DataTable
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;
             })
+            ->addColumn('category', function ($music) {
+                return $music->category->name;
+            })
             ->rawColumns(['action'])
             ->addIndexColumn();
     }
@@ -45,7 +48,7 @@ class SongsListAdminDataTable extends DataTable
      */
     public function query(Music $model): QueryBuilder
     {
-        return $model->newQuery()->with('artist');
+        return $model->newQuery()->with('artist', 'category');
     }
 
     /**
@@ -91,6 +94,8 @@ class SongsListAdminDataTable extends DataTable
                 ->title('Song Name'),
             Column::computed('artist')
                 ->title('Artist'),
+            Column::computed('category')
+                ->title('Category'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action'),

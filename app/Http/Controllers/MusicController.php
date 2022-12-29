@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\MusicDataTable;
 use App\Http\Requests\StoreMusicRequest;
 use App\Http\Requests\UpdateMusicRequest;
+use App\Models\Category;
 use App\Models\Music;
 use App\Models\Playlist;
 use function Termwind\render;
@@ -22,7 +23,8 @@ class MusicController extends Controller
             $dataTable->setPlaylist(request('p'));
         }
 
-        return  $dataTable->render('dashboard');
+        $categories = Category::all();
+        return  $dataTable->render('dashboard', compact('categories'));
     }
 
     /**

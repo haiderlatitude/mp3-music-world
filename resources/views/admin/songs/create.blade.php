@@ -4,7 +4,7 @@
 
     @if(session()->has('message'))
         <div class="text-center pb-3">
-        {{ session('message') }}
+            {{ session('message') }}
         </div>
     @endif
     <div class="card-box">
@@ -21,16 +21,26 @@
                 <label class="col-form-label col-md-2">Artist</label>
                 <div class="col-md-10">
                     <select class="form-control" id="artist-id" name="artist-id" required>
-                        <option  value="">-- Select --</option>
+                        <option value="">-- Select --</option>
                         @foreach($artists as $artist)
                             <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <label class="col-form-label col-md-2 mt-3">Category</label>
+                <div class="col-md-10 mt-3">
+                    <select class="form-control" id="category-id" name="category-id" required>
+                        <option value="">-- Select --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-form-label col-md-2" >File input</label>
+                <label class="col-form-label col-md-2">File input</label>
                 <div class="col-md-10">
                     <input class="form-control" type="file" name="song" id="song" required>
                 </div>

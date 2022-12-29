@@ -36,6 +36,9 @@ class MusicDataTable extends DataTable
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;
             })
+            ->addColumn('category', function ($music) {
+                return $music->category->name;
+            })
             ->rawColumns(['action'])
             ->addIndexColumn();
     }
@@ -48,11 +51,19 @@ class MusicDataTable extends DataTable
      */
     public function query(Music $model): QueryBuilder
     {
+        $category = $this->request()->get('category');
+        $query = $model->newQuery();
+
+        if (!($category == 'Select Category') && !is_null($category))
+        {
+            $query->whereRelation('category', 'name', '=', $category);
+        }
+
         if ($this->playlist){
-            return $model->newQuery()
+            return $query
                 ->whereRelation('playlistSongs', 'name', '=', $this->playlist);
         }else
-        return $model->newQuery()->with('artist');
+        return $query->with('artist', 'category');
     }
 
     /**
@@ -98,6 +109,8 @@ class MusicDataTable extends DataTable
                 ->title('Song Name'),
             Column::computed('artist')
                 ->title('Artist'),
+            Column::computed('category')
+                ->title('Category'),
             Column::computed('action'),
         ];
     }

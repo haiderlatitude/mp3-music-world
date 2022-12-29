@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,15 +13,19 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('music', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('artist_id');
-            $table->unsignedBigInteger('category_id');
-            $table->string('file_path');
             $table->timestamps();
         });
+
+        Schema::table('music', function (Blueprint $table) {
+
+            $table->foreign('category_id')->on('categories')->references('id');
+
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -29,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('music');
+        Schema::dropIfExists('categories');
     }
 };

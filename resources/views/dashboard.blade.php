@@ -1,6 +1,18 @@
 @extends('dashboard.app', ['title' => 'Dashboard'])
 
 @section('body')
+    <div class="card-header form-inline row">
+
+        <div class=" col-3">
+            <Label for="role"> Categories </Label>
+            <select class="form-select filter-data" aria-label="Default select example" id="category">
+                <option selected>Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
     <div>
         {!! $dataTable->table(['class' => 'table table-striped table-bordered', 'style' => 'width:100%'],
        true) !!}
@@ -194,5 +206,25 @@
                 allowOutsideClick: () => !Swal.isLoading(),
             })
         }
+
+        $(document).ready(function () {
+
+            /***************************************************
+             *
+             * Send data with Datatables AJAX request for filters...
+             *
+             ***************************************************/
+
+            table.on('preXhr.dt', function (e, settings, data) {
+                let category = $('#category').find(':selected').text();
+                data.category = category;
+            })
+
+            $('.filter-data').on('change', function () {
+                table.DataTable().ajax.reload();
+                return false;
+            })
+
+        });
     </script>
 @endpush

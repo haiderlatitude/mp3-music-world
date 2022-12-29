@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\SongsListAdminDataTable;
 use App\Models\Artist;
+use App\Models\Category;
 use App\Models\Music;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -29,7 +30,8 @@ class AdminSongsController extends Controller
     public function create()
     {
         $artists = Artist::all();
-        return view('admin.songs.create', compact('artists'));
+        $categories = Category::all();
+        return view('admin.songs.create', compact('artists', 'categories'));
     }
 
     /**
@@ -43,6 +45,7 @@ class AdminSongsController extends Controller
         $music = new  Music();
         $music->name = $request->all()['song-name'];
         $music->artist_id = $request->all()['artist-id'];
+        $music->category_id = $request->all()['category-id'];
         $temp = $request->all()['song'];
         $file = explode('@', $temp);
 
