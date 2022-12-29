@@ -8,7 +8,7 @@
         <div class="account-page">
             <div class="account-center">
                 <div class="account-box">
-                <x-jet-validation-errors class="mb-4"/>
+                <x-jet-validation-errors class="text-danger mb-4"/>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf

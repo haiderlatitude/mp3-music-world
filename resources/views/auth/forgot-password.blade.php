@@ -12,14 +12,8 @@
                 <div class="mb-4 text-sm text-gray-600">
                 {{ __('Enter your email address so we can send you a password reset link.') }}
                 </div>
-
-        @if(session()->has('message'))
-            <div class="mb-4 font-medium text-sm text-danger">
-                {{ session('message') }}
-            </div>
-        @endif
-
-        <x-jet-validation-errors class="mb-4"/>
+        
+        <x-jet-validation-errors class="text-danger mb-4"/>
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
