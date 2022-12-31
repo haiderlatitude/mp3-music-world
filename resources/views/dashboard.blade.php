@@ -1,10 +1,8 @@
 @extends('dashboard.app', ['title' => 'Dashboard'])
 
 @section('body')
-    <div class="card-header form-inline row">
-
-        <div class=" col-3">
-            <Label for="role"> Categories </Label>
+    <div class="form-inline row pb-3">
+        <div>
             <select class="form-select filter-data" aria-label="Default select example" id="category">
                 <option selected>Select Category</option>
                 @foreach($categories as $category)
@@ -12,16 +10,16 @@
                 @endforeach
             </select>
         </div>
-    </div>
-    <div>
+    </div><hr>
+    <div class='pt-2'>
         {!! $dataTable->table(['class' => 'table table-striped table-bordered', 'style' => 'width:100%'],
        true) !!}
-        <div class="relative-bottom row">
-            <audio id="player" controls="controls">
+    </div>
+    <div class="position-absolute row bottom-0">
+            <audio class="rounded" id="player" controls="controls">
                 <source id="source" src="" type="audio/mpeg"/>
             </audio>
         </div>
-    </div>
 @endsection
 
 @push('scripts')

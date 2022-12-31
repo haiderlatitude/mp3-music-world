@@ -143,7 +143,7 @@ class AdminSongsController extends Controller
     public function clearTemp(){
         Storage::deleteDirectory('songs/temp');
         return redirect()->intended('admin/songs/create')
-            ->with('message', 'Temporary Folder Deleted');
+            ->with('message', 'Temporary Files Deleted');
     }
 
 

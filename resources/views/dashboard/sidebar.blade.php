@@ -13,6 +13,11 @@
                     <li>
                         <a href="{{ route('profile.show') }}"><i class="fa fa-user"></i> <span>Profile</span></a>
                     </li>
+                    @hasrole(\App\Utils\Roles::$ADMIN)    
+                        <li>
+                            <a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>Users</span></a>
+                        </li>
+                    @endhasrole
                     <hr>
                 @endauth
                 @hasrole(\App\Utils\Roles::$ADMIN)
@@ -23,13 +28,13 @@
                     <a href="{{ route('songs.create') }}"><i class="fa fa-music"></i> <span>Upload a Song</span></a>
                 </li>
                 <li>
-                    <a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>Users</span></a>
-                </li>
-                <li>
                     <a href="{{ route('artists.index') }}"><i class="fa fa-microphone"></i> <span>Artists</span></a>
                 </li>
                 <li>
                     <a href="{{ route('artists.create') }}"><i class="fa fa-microphone"></i> <span>Add Artist</span></a>
+                </li>
+                <li>
+                    <a href="{{ route('categories.index') }}"><i class="fa fa-music"></i> <span>Categories</span></a>
                 </li>
                 <hr>
                 @endhasrole

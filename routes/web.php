@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaylistController;
@@ -37,9 +38,10 @@ Route::prefix('admin')
     ->middleware('role:' . \App\Utils\Roles::$ADMIN)
     ->group(function (){
         Route::resource('songs', AdminSongsController::class);
-        Route::post('upload', [AdminSongsController::class, 'upload']);
-        Route::get('clear_temp', [AdminSongsController::class, 'clearTemp']);
-        Route::post('artists/get_artists', [AdminSongsController::class, 'getArtists']);
         Route::resource('users', AdminUserController::class);
         Route::resource('artists', ArtistController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::get('clear_temp', [AdminSongsController::class, 'clearTemp']);
+        Route::post('upload', [AdminSongsController::class, 'upload']);
+        Route::post('artists/get_artists', [AdminSongsController::class, 'getArtists']);
     });

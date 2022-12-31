@@ -49,7 +49,7 @@ class ArtistController extends Controller
 
         catch(\Exception $e){
             return redirect()->intended('admin/artists/create')
-            ->with('message', 'The Artist is stubborn, please try again later!');
+            ->with('message', 'Could not add Artist, please try again later!');
         }
     }
 
@@ -115,7 +115,7 @@ class ArtistController extends Controller
         return response()->json(
             [
                 'type' => 'success',
-                'message' => 'artist deleted successfully.'
+                'message' => 'Artist deleted successfully.'
             ]);
         }
 

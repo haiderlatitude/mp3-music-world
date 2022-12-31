@@ -111,6 +111,6 @@ class MusicController extends Controller
      */
     public function destroy(Music $music)
     {
-        dd($music);
+        // dd($music);
     }
 }
