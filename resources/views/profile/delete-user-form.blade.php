@@ -11,12 +11,17 @@
         <div class="max-w-xl text-sm text-gray-600">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
         </div>
-
-        <div class="mt-5">
-            <x-jet-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
-                {{ __('Delete Account') }}
-            </x-jet-danger-button>
-        </div>
+        @if(Auth::user()->name == "Admin")
+            <div class="mt-5">
+               {{ __('Admin accoutn cannot be deleted!') }}
+            </div>
+        @else
+            <div class="mt-5">
+                <x-jet-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
+                    {{ __('Delete Account') }}
+                </x-jet-danger-button>
+            </div>
+        @endif
 
         <!-- Delete User Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingUserDeletion">

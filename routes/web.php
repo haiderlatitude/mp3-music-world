@@ -1,5 +1,6 @@
 <?php
 
+use App\Utils\Roles;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminSongsController;
 use App\Http\Controllers\AdminUserController;
@@ -35,7 +36,7 @@ Route::middleware([
 
 //Admin Routes...
 Route::prefix('admin')
-    ->middleware('role:' . \App\Utils\Roles::$ADMIN)
+    ->middleware('role:' . Roles::$ADMIN)
     ->group(function (){
         Route::resource('songs', AdminSongsController::class);
         Route::resource('users', AdminUserController::class);

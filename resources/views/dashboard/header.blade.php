@@ -12,7 +12,9 @@
         <li>
             <a href="/" class="nav-link user-link"
                id="dropdownPofile">
-                @if(auth()->check())<span>{{Auth::user()->name}}</span> @else
+                @if(auth()->check())
+                    <span>{{Auth::user()->name}}</span>
+                @else
                     <span>User</span>
                 @endif
             </a>

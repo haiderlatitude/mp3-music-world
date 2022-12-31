@@ -60,28 +60,6 @@ class AdminSongsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -90,17 +68,28 @@ class AdminSongsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $song = Music::query()->find($id);
-        $song->name = $request->all()['name'];
-        $song->artist_id = $request->all()['artist_id'];
-        $song->save();
+        try{
+            $song = Music::query()->find($id);
+            $song->name = $request->all()['name'];
+            $song->artist_id = $request->all()['artist_id'];
+            $song->save();
 
-        return response()->json(
-            [
-                'type' => 'success',
-                'message' => 'Song updated Successfully!',
-            ]
-        );
+            return response(
+                [
+                    'type' => 'success',
+                    'message' => 'Song updated Successfully!',
+                ]
+            );
+        }
+
+        catch(\Exception $e){
+            return response(
+                [
+                    'type' => 'error',
+                    'message' => 'Some error occurred!',
+                ]
+            );
+        }
 
     }
 
@@ -112,18 +101,27 @@ class AdminSongsController extends Controller
      */
     public function destroy($id)
     {
-        $music = Music::query()->find($id);
-        $filePath = explode("/", $music['file_path']);
-        $directory = $filePath[0];
-        Storage::deleteDirectory('songs/'.$directory);
-        $music->delete();
+        try{
+            $music = Music::query()->find($id);
+            $filePath = explode("/", $music['file_path']);
+            $directory = $filePath[0];
+            Storage::deleteDirectory('songs/'.$directory);
+            $music->delete();
 
-        return response()->json(
-            [
-                'type' => 'success',
-                'message' => 'Song has been deleted successfully',
-            ]
-        );
+            return response(
+                [
+                    'type' => 'success',
+                    'message' => 'Song has been deleted successfully',
+                ]
+            );
+        }
+        
+        catch(\Exception $e){
+            return response([
+                'type' => 'error',
+                'message' => 'Some error occurred while deleting the song!'
+            ]);
+        }
     }
 
 

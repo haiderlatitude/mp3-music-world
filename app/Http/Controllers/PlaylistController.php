@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DataTables\PlaylistDataTable;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PlaylistController extends Controller
 {
@@ -17,16 +16,6 @@ class PlaylistController extends Controller
     public function index(PlaylistDataTable $dataTable)
     {
         return $dataTable->render('playlist.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -53,29 +42,7 @@ class PlaylistController extends Controller
             ]);
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Playlist $playlist
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Playlist $playlist)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Playlist $playlist
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Playlist $playlist)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -86,7 +53,7 @@ class PlaylistController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $playlist = Playlist::query()->find($id);
+            $playlist = Playlist::find($id);
             $playlist->name = $request->name;
             $playlist->save();
             return response([
@@ -110,14 +77,13 @@ class PlaylistController extends Controller
     public function destroy($id)
     {
         try {
-            $playlist = Playlist::query()->find($id);
-            $playlist->delete();
-            return response()->json([
+            Playlist::find($id)->delete();
+            return response([
                 'type' => 'success',
                 'message' => 'Deleted successfully'
             ]);
         } catch (\Exception $e) {
-            return response()->json([
+            return response([
                 'type' => 'error',
                 'message' => 'Some error occurred during the deletion of Playlist!'
             ]);
@@ -126,6 +92,6 @@ class PlaylistController extends Controller
 
     public function getPlaylists()
     {
-        return Playlist::query()->where('user_id', '=', Auth::id())->get();
+        return Playlist::where('user_id', auth()->id())->get();
     }
 }

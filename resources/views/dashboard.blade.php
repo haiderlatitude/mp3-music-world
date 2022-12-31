@@ -16,10 +16,10 @@
        true) !!}
     </div>
     <div class="position-absolute row bottom-0">
-            <audio class="rounded" id="player" controls="controls">
-                <source id="source" src="" type="audio/mpeg"/>
-            </audio>
-        </div>
+        <audio class="rounded" id="player" controls="controls">
+            <source id="source" src="" type="audio/mpeg"/>
+        </audio>
+    </div>
 @endsection
 
 @push('scripts')
@@ -50,26 +50,15 @@
             let url = $(this).data('file-path');
             let player = $('#player');
             $("#source").attr("src", 'songs/' + url);
-
             player[0].pause();
             player[0].load();
-            player[0].oncanplaythrough = player[0].play();
+            player[0].play();
         }
 
         $.fn.addToPlaylist = function () {
             let musicId = $(this).data('id');
 
-            Swal.fire({
-                title: 'Please Wait!',
-                showCancelButton: false,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                button: false,
-                onBeforeOpen: () => {
-                    Swal.showLoading()
-                },
-            });
+            Swal.showLoading();
 
             let payload = {
                 _token: "{{ csrf_token() }}",
@@ -85,6 +74,16 @@
                     Swal.close();
                     let data = JSON.stringify(response);
                     let playlists = $.parseJSON(data);
+                    
+                    if(playlists.length == 0){
+                        return Swal.fire({
+                            title: 'No Playlist Exists',
+                            text: 'Please create a playlist before adding songs into it.',
+                            confirmButtonText: 'Okay!',
+                            confirmButtonColor: '#009efb',
+                            allowOutsideClick: false,
+                        });
+                    }
 
                     let html = '<select class="form-control" id="selectPlaylist"> <option selected>Choose Playlist</option> ';
                     playlists.forEach(function (playlist) {
@@ -165,6 +164,8 @@
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: 'Remove',
+                confirmButtonColor: '#f62d51',
+                cancelButtonColor: '#009efb',
                 showLoaderOnConfirm: true,
                 preConfirm: () => {
                     let payload = {
@@ -220,7 +221,7 @@
 
             $('.filter-data').on('change', function () {
                 table.DataTable().ajax.reload();
-                return false;
+                return;
             })
 
         });

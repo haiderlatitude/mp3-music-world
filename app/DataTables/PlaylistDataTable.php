@@ -4,7 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Playlist;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
@@ -33,10 +32,9 @@ class PlaylistDataTable extends DataTable
      * @param \App\Models\Playlist $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Playlist $model): QueryBuilder
+    public function query(): QueryBuilder
     {
-        return $model->newQuery()
-            ->where('user_id', '=', Auth::id());
+        return Playlist::where('user_id', auth()->id());
     }
 
     /**
