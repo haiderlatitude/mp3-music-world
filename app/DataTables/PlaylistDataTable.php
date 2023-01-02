@@ -32,9 +32,9 @@ class PlaylistDataTable extends DataTable
      * @param \App\Models\Playlist $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(): QueryBuilder
+    public function query(Playlist $model): QueryBuilder
     {
-        return Playlist::where('user_id', auth()->id());
+        return $model->newQuery()->where('user_id', auth()->id());
     }
 
     /**
