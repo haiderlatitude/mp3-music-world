@@ -140,6 +140,8 @@
                     allowOutsideClick: false,
                     showCancelButton: true,
                     confirmButtonText: 'Update',
+                    confirmButtonColor: '#009efb',
+                    cancelButtonColor: '#f62d51',
                     showLoaderOnConfirm: true
                 });
             },

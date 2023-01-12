@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersListDataTable;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -18,49 +19,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -69,7 +27,23 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            return response([
+                'type' => 'success',
+                'message' => 'User details updated successfully!'
+            ]);
+        }
+
+        catch(\Exception $e){
+            return response([
+                'type' => 'error',
+                'message' => 'Could not update credentials!'
+            ]);
+        }
     }
 
     /**
@@ -80,6 +54,18 @@ class AdminUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            User::find($id)->delete();
+            return response([
+                'type' => 'success',
+                'message' => 'User deleted!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response([
+                'type' => 'error',
+                'message' => 'Could not delete the user account'
+            ]);
+        }
     }
 }

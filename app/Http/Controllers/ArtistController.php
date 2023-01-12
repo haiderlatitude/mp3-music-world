@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
-use Illuminate\Http\Request;
 use App\DataTables\ArtistDataTable;
+use Illuminate\Support\Str;
 use App\Models\Artist;
+use ErrorException;
 
 class ArtistController extends Controller
 {
@@ -36,20 +37,27 @@ class ArtistController extends Controller
      * @param \App\Http\Requests\StoreArtistRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreArtistRequest $request)
     {
         try{
-        $artist = new Artist();
-        $artist->name = $request->all()['artist-name'];
-        $artist->save();
+            $artist = Artist::where('name', $request->name)->first();
+            if(Str::lower($artist->name) === Str::lower($request->name))
+                return redirect('admin/artists/create')
+                ->with('message', 'Artist already exists!');
+        }
 
-        return redirect()->intended('admin/artists/create')
-        ->with('message', 'Artist added successfully.');
+        catch(ErrorException $e){
+            $artist = new Artist();
+            $artist->name = $request->name;
+            $artist->save();
+
+            return redirect('admin/artists/create')
+            ->with('message', 'Artist added successfully');
         }
 
         catch(\Exception $e){
-            return redirect()->intended('admin/artists/create')
-            ->with('message', 'Could not add Artist, please try again later!');
+            return redirect('admin/artists/create')
+            ->with('message', 'Could not add new Artist. Please try again later!');
         }
     }
 

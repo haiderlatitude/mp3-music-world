@@ -8,8 +8,8 @@
     </x-slot>
 
     <x-slot name="content">
-        @if(Auth::user()->name == "Admin")
-            <div class="mt-5">
+        @role('Admin')
+            <div class="mx-auto my-auto text-center">
                 {{ __('Admin account cannot be deleted!') }}
             </div>
         @else
@@ -21,7 +21,7 @@
                     {{ __('Delete Account') }}
                 </x-jet-danger-button>
             </div>
-        @endif
+        @endrole
 
         <!-- Delete User Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingUserDeletion">

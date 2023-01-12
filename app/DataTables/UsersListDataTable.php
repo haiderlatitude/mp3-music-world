@@ -21,12 +21,16 @@ class UsersListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('action', function ($user) {
+                return view('admin.users.buttons', compact('user'));
+            })
             ->editColumn('created_at', function ($user) {
                 return Carbon::createFromDate($user->created_at)->diffForHumans();
             })
             ->editColumn('updated_at', function ($user) {
                 return Carbon::createFromDate($user->updated_at)->diffForHumans();
             })
+            ->rawColumns(['action'])
             ->addIndexColumn();
     }
 
@@ -82,9 +86,9 @@ class UsersListDataTable extends DataTable
             Column::make('name')->title('Name'),
             Column::make('username')->title('Username'),
             Column::make('email')->title('Email'),
-            Column::make('payment_status')->title('Premium User'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
         ];
     }
 

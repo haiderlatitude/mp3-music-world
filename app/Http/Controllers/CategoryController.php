@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\DataTables\CategoryDataTable;
+use ErrorException;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -37,27 +38,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::where('name', '=', $request->name)->first();
-        
         try{
+            $category = Category::where('name', $request->name)->first();
             if(Str::lower($category->name) === Str::lower($request->name)){
-                return response()->json([
+                return response([
                     'type' => 'info',
-                    'message' => 'Category already exists'
-                ]);
-            }
-            else{
-                $category->name = $request->name;
-                $category->save();
-                return response()->json([
-                    'type' => 'success',
-                    'message' => 'New category has been added.'
+                    'message' => 'Category already exists!'
                 ]);
             }
         }
-
+        catch(ErrorException $e){
+            $category = new Category();
+            $category->name = $request->name;
+            $category->save();
+            return response([
+                'type' => 'success',
+                'message' => 'New category has been added'
+            ]);
+        }
         catch(\Exception $e){
-            return response()->json([
+            return response([
                 'type' => 'error',
                 'message' => 'Could not add new category!'
             ]);
