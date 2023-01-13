@@ -2,10 +2,7 @@
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                <br>
-                <br>
-
-                <li class="menu-title text-center">Management</li><hr>
+                <li class="menu-title text-center"><u>Management</u></li>
                 @auth
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
