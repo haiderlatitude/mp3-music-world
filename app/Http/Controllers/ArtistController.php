@@ -93,8 +93,18 @@ class ArtistController extends Controller
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
         try{
-            $artist->name = $request->all()['name'];
+            $exists = Artist::where('name', $request->name)->first();
+            if(Str::lower($exists->name) === Str::lower($request->name))
+                return response()->json([
+                    'type' => 'info',
+                    'message' => 'Artist already exists!'
+                ]);
+            }
+
+            catch(ErrorException $e){
+            $artist->name = $request->name;
             $artist->save();
+            unset($exists);
 
             return response()->json([
                 'type' => 'success',
@@ -105,7 +115,7 @@ class ArtistController extends Controller
         catch(\Exception $e){
             return response()->json([
                 'type' => 'error',
-                'message' => 'Oops! Something bad is going on :('
+                'message' => 'Could not update Artist. Please try again later!'
             ]);
         }
     }
@@ -119,12 +129,12 @@ class ArtistController extends Controller
     public function destroy(Artist $artist)
     {
         try{
-        $artist->delete();
-        return response()->json(
-            [
-                'type' => 'success',
-                'message' => 'Artist deleted successfully.'
-            ]);
+            $artist->delete();
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'message' => 'Artist deleted successfully.'
+                ]);
         }
 
         catch(\Exception $e){

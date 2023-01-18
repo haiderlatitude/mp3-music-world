@@ -21,16 +21,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-    
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -63,29 +53,7 @@ class CategoryController extends Controller
             ]);
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -96,10 +64,20 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try{
+            $exists = Category::where('name', $request->name)->first();
+            if(Str::lower($exists->name) === Str::lower($request->name)){
+                return response()->json([
+                    'type' => 'info',
+                    'message' => 'Category already exists!'
+                ]);
+            }
+        }
+
+        catch(ErrorException $e){
             $category = Category::find($id);
             $category->name = $request->name;
             $category->save();
-
+    
             return response()->json([
                 'type' => 'success',
                 'message' => 'Category name has been updated.'

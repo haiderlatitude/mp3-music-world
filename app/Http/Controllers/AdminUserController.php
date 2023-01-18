@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsersListDataTable;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -35,6 +36,12 @@ class AdminUserController extends Controller
             return response([
                 'type' => 'success',
                 'message' => 'User details updated successfully!'
+            ]);
+        }
+        catch(QueryException $e){
+            return response([
+                'type' => 'info',
+                'message' => 'This email address already exists!'
             ]);
         }
 

@@ -20,7 +20,7 @@
     })
 
     /*****************************
-     * Edit User functionality...
+     * Edit User Information...
      *****************************/
 
     $.fn.editUser = function (){
@@ -80,7 +80,7 @@
     }
 
     /*****************************
-     * Delete User functinality
+     * Delete User Information...
      *****************************/
 
     $.fn.deleteUser = function(){
