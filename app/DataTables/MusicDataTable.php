@@ -3,8 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Music;
-use App\Models\Playlist;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -15,7 +14,8 @@ class MusicDataTable extends DataTable
 {
     private $playlist = null;
 
-    public function setPlaylist(string $playlist){
+    public function setPlaylist(string $playlist)
+    {
         $this->playlist = $playlist;
     }
 
@@ -32,6 +32,12 @@ class MusicDataTable extends DataTable
             ->addColumn('action', function ($music) {
                 $playlist = $this->playlist;
                 return view('playButton', compact('music', 'playlist'));
+            })->filter(function (Builder $query) {
+                if (request()->has('search')) {
+                    $query->with('artist', 'category')
+                        ->whereRelation('artist', 'name', 'like', "%" . request('search')['value'] . "%")
+                        ->orWhereRelation('category', 'name', 'like', "%" . request('search')['value'] . "%");
+                }
             })
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;
@@ -40,7 +46,7 @@ class MusicDataTable extends DataTable
                 return $music->category->name;
             })
             ->rawColumns(['action'])
-            ->addIndexColumn();
+            ->addIndexColumn('music.id');
     }
 
     /**
@@ -54,16 +60,15 @@ class MusicDataTable extends DataTable
         $category = $this->request()->get('category');
         $query = $model->newQuery();
 
-        if (!($category == 'Select Category') && !is_null($category))
-        {
+        if (!($category == 'Select Category') && !is_null($category)) {
             $query->whereRelation('category', 'name', '=', $category);
         }
 
-        if ($this->playlist){
+        if ($this->playlist) {
             return $query
                 ->whereRelation('playlistSongs', 'name', '=', $this->playlist);
-        }else
-        return $query->with('artist', 'category');
+        } else
+            return $query->with('artist', 'category');
     }
 
     /**
@@ -105,11 +110,11 @@ class MusicDataTable extends DataTable
         return [
             Column::make('DT_RowIndex', 'id')
                 ->title('Sr#.'),
-            Column::make('name')
+            Column::make('name', 'name')
                 ->title('Song Name'),
-            Column::computed('artist')
+            Column::make('artist', 'artist')
                 ->title('Artist'),
-            Column::computed('category')
+            Column::make('category', 'category')
                 ->title('Category'),
             Column::computed('action'),
         ];
