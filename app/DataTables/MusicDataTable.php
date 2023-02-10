@@ -36,15 +36,17 @@ class MusicDataTable extends DataTable
             ->filter(function (Builder $query) {
                 if (request()->has('search')) {
                     $query->with('artist', 'category')
-                        ->whereRelation('artist', 'name', 'like', "%" . request('search')['value'] . "%")
-                        ->orWhere('name', 'like', "%" . request('search')['value'] . "%");
-                    if ($this->request()->has('category'))
-                    {
+                        ->Where('name', 'like', "%" . request('search')['value'] . "%")
+                        ->orWhereRelation('artist', 'name', 'like', "%" . request('search')['value'] . "%");
+
+                    $category = $this->request()->get('category');
+
+                    if (!($category == 'Select Category') && !is_null($category)) {
+
                         $query->whereRelation('category', 'name', '=', $this->request()->get('category'));
                     }
 
-                    if ($this->playlist)
-                    {
+                    if ($this->playlist) {
                         $query
                             ->whereRelation('playlistSongs', 'name', '=', $this->playlist);
 
