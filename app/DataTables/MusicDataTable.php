@@ -32,12 +32,25 @@ class MusicDataTable extends DataTable
             ->addColumn('action', function ($music) {
                 $playlist = $this->playlist;
                 return view('playButton', compact('music', 'playlist'));
-            })->filter(function (Builder $query) {
+            })
+            ->filter(function (Builder $query) {
                 if (request()->has('search')) {
                     $query->with('artist', 'category')
                         ->whereRelation('artist', 'name', 'like', "%" . request('search')['value'] . "%")
-                        ->orWhereRelation('category', 'name', 'like', "%" . request('search')['value'] . "%");
+                        ->orWhere('name', 'like', "%" . request('search')['value'] . "%");
+                    if ($this->request()->has('category'))
+                    {
+                        $query->whereRelation('category', 'name', '=', $this->request()->get('category'));
+                    }
+
+                    if ($this->playlist)
+                    {
+                        $query
+                            ->whereRelation('playlistSongs', 'name', '=', $this->playlist);
+
+                    }
                 }
+
             })
             ->addColumn('artist', function ($music) {
                 return $music->artist->name;
