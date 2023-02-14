@@ -71,7 +71,7 @@ class AdminUserController extends Controller
         catch(\Exception $e){
             return response([
                 'type' => 'error',
-                'message' => 'Could not delete the user account'
+                'message' => 'Could not delete the user account!'
             ]);
         }
     }
