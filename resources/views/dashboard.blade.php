@@ -12,11 +12,11 @@
         </div>
     </div><hr>
     <div class='pt-2'>
-        {!! $dataTable->table(['class' => 'table table-striped table-bordered', 'style' => 'width:100%'],
+        {!! $dataTable->table(['class' => 'table-striped', 'style' => 'width:100%'],
        true) !!}
     </div>
     <div class="position-absolute row bottom-0">
-        <audio class="rounded" id="player" controls="controls">
+        <audio class="rounded" id="player" controls controlsList="nodownload">
             <source id="source" src="" type="audio/mpeg"/>
         </audio>
     </div>
