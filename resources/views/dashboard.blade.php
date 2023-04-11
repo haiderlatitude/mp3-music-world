@@ -4,7 +4,7 @@
     <div class="form-inline row pb-3">
         <div>
             <select class="form-select filter-data" aria-label="Default select example" id="category">
-                <option selected>Select Category</option>
+                <option selected>Select Song Category</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
@@ -74,7 +74,7 @@
                     Swal.close();
                     let data = JSON.stringify(response);
                     let playlists = $.parseJSON(data);
-                    
+
                     if(playlists.length == 0){
                         return Swal.fire({
                             title: 'No Playlist Exists',
