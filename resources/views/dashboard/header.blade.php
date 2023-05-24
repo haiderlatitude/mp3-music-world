@@ -13,7 +13,7 @@
                 <span>{{Auth::user()->name}}</span>
             @else
                 <div>
-                    Want to download music? Register
+                    Want to download music? Just Register
                 </div>
             @endif
         </a>
